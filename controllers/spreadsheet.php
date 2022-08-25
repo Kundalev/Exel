@@ -1,11 +1,25 @@
 <?php
 
 
-require 'vendor/autoload.php';
+ini_set('error_reporting', E_ALL);
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+
+
+require '../vendor/autoload.php';
 
 use PhpOffice\PhpSpreadsheet\Reader\Xlsx as ReaderXlsx;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx as WriteXlsx;
+use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet as Worksheet;
 
-$inputFileName = 'Drivers.xlsx';
+
+$new_file = '../upload_files/'.$_FILES['file']['name'];
+
+copy($_FILES['file']['tmp_name'], $new_file);
+
+
+
+$inputFileName = $new_file;
 $reader = new ReaderXlsx();
 $spreadsheet = $reader->load($inputFileName);
 $sheet = $spreadsheet->getActiveSheet();
@@ -59,7 +73,24 @@ for ($i = 0; $i < count($arr); $i++) {
     ];
 }
 
-require_once  'views/vaucher.html';
+$char = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'];
+
+
+for ($i = 1; $i <= 5; $i++){
+    $myWorkSheet = new Worksheet($spreadsheet, 'new' . $i);
+    $spreadsheet->addSheet($myWorkSheet);
+    $writer = new WriteXlsx($spreadsheet);
+    $sheet = $spreadsheet->getSheet($i);
+
+    for($j = 1; $j<=count($fin)-1; $j++){
+        $sheet->setCellValue($char[$j]. 1, $fin[$j]['name']);
+        $sheet->setCellValue($char[$j] . 2, $fin[$j]['workHour']);
+    }
+
+}
 
 
 
+$writer->save($inputFileName);
+
+require_once '../views/vaucher.html';

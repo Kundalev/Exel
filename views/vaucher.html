@@ -5,28 +5,50 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>Vauchers</title>
+    <style>
+        table.iksweb{
+            width: 100%;
+            border-collapse:collapse;
+            border-spacing:0;
+            height: auto;
+        }
+        table.iksweb,table.iksweb td, table.iksweb th {
+            border: 1px solid #595959;
+        }
+        table.iksweb td,table.iksweb th {
+            padding: 3px;
+            width: 30px;
+            height: 35px;
+        }
+        table.iksweb th {
+            background: #347c99;
+            color: #fff;
+            font-weight: normal;
+        }
+    </style>
 </head>
 <body>
-  <div>
+<h1>Working hours</h1>
+<table class="iksweb">
+    <tbody>
+    <tr>
+        <td>№</td>
+        <td>Name</td>
+        <td>Working hours</td>
+    </tr>
     <?php
-        foreach ($fin as $item){
-            ?>
-
-      <table>
-          <tbody>
-          <tr>
-              <td><?= $item['name'] ?></td>
-              <td><?= $item['vh']?> </td>
-              <td></td>
-              <td></td>
-              <td><?= $item ['workHour']?></td>
-          </tr>
-          </tbody>
-      </table>
-      <?php
-        }
+    foreach($fin as $item){
     ?>
-  </div>
+    <tr>
+        <td><?=$item['number']?></td>
+        <td><?=$item['name']?></td>
+        <td><?=$item['workHour']?></td>
+    </tr>
+    <?php
+    }
+    ?>
+    </tbody>
+</table>
 </body>
 </html>
